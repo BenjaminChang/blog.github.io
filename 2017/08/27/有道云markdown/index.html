@@ -188,7 +188,7 @@
 
 
 
-    <a data-url="http://blog.westbreeze.cn/2017/08/27/有道云markdown/" data-id="cj6uy1ujj0000ochqacj0zisp" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://blog.westbreeze.cn/2017/08/27/有道云markdown/" data-id="cj6uy6iug00008shqfol8xz8c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -504,12 +504,10 @@
         var query = new AV.Query("Counter");
         if($(".leancloud_visitors").length > 0){
             var url = $(".leancloud_visitors").attr('id').trim();
-			console.info(url);
             // where field
             query.equalTo("words", url);
             // count
             query.count().then(function (number) {
-			console.info(number);
                 // There are number instances of MyClass where words equals url.
                 $(document.getElementById(url)).text(number?  number : '1756');
             }, function (error) {

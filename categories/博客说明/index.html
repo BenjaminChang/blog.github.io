@@ -412,12 +412,10 @@
         var query = new AV.Query("Counter");
         if($(".leancloud_visitors").length > 0){
             var url = $(".leancloud_visitors").attr('id').trim();
-			console.info(url);
             // where field
             query.equalTo("words", url);
             // count
             query.count().then(function (number) {
-			console.info(number);
                 // There are number instances of MyClass where words equals url.
                 $(document.getElementById(url)).text(number?  number : '1756');
             }, function (error) {

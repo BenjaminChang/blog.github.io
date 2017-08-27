@@ -182,7 +182,7 @@
 
 
 
-    <a data-url="http://blog.westbreeze.cn/2017/08/27/写在前面/" data-id="cj6uy1ujw0001ochqsb2rai46" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://blog.westbreeze.cn/2017/08/27/写在前面/" data-id="cj6uy6ius00018shqhi747n89" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -502,12 +502,10 @@
         var query = new AV.Query("Counter");
         if($(".leancloud_visitors").length > 0){
             var url = $(".leancloud_visitors").attr('id').trim();
-			console.info(url);
             // where field
             query.equalTo("words", url);
             // count
             query.count().then(function (number) {
-			console.info(number);
                 // There are number instances of MyClass where words equals url.
                 $(document.getElementById(url)).text(number?  number : '1756');
             }, function (error) {
