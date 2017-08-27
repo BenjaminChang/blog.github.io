@@ -180,7 +180,7 @@
 
 
 
-    <a data-url="http://blog.westbreeze.cn/2017/08/27/写在前面/" data-id="cj6uwo4tw0001h4hq7852684m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://blog.westbreeze.cn/2017/08/27/写在前面/" data-id="cj6uxb1sp0000i8hqa606fj4e" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -265,12 +265,6 @@
 </article>
 
     <section id="comments">
-    
-        
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
     
     </section>
 
@@ -506,10 +500,12 @@
         var query = new AV.Query("Counter");
         if($(".leancloud_visitors").length > 0){
             var url = $(".leancloud_visitors").attr('id').trim();
+			console.info(url);
             // where field
             query.equalTo("words", url);
             // count
             query.count().then(function (number) {
+			console.info(number);
                 // There are number instances of MyClass where words equals url.
                 $(document.getElementById(url)).text(number?  number : '1756');
             }, function (error) {
@@ -534,23 +530,6 @@
     });
 </script>
         
-    
-    <script>
-    var disqus_shortname = 'hexo-theme-hueman';
-    
-    
-    var disqus_url = 'http://blog.westbreeze.cn/2017/08/27/写在前面/';
-    
-    (function() {
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-    </script>
-
-
 
 
     
