@@ -186,7 +186,7 @@
 
 
 
-    <a data-url="http://blog.westbreeze.cn/2017/08/27/有道云markdown/" data-id="cj6uv00l700014chq3ayz18ck" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://blog.westbreeze.cn/2017/08/27/有道云markdown/" data-id="cj6uw14vz0001tchq8h5067cm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -479,7 +479,8 @@
                 </h1>
                 <p>&copy; 2017 westbreeze</p>
                 <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
-            </div>
+				阅读数量:<span id="http://blog.westbreeze.cn" class="leancloud_visitors" data-flag-title="personal blog"></span>次
+			</div>
         </div>
     </div>
 	<script>
@@ -494,6 +495,46 @@
 
 
 </footer>
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var APP_ID = 'T9Th4ByFc2kE8hLy1y2YXh2D-gzGzoHsz';
+    var APP_KEY = 'vCk3V3mIGlaYuPpgSdQIAvl5';
+    AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+    });
+    // 显示次数
+    function showTime(Counter) {
+        var query = new AV.Query("Counter");
+        if($(".leancloud_visitors").length > 0){
+            var url = $(".leancloud_visitors").attr('id').trim();
+            // where field
+            query.equalTo("words", url);
+            // count
+            query.count().then(function (number) {
+                // There are number instances of MyClass where words equals url.
+                $(document.getElementById(url)).text(number?  number : '--');
+            }, function (error) {
+                // error is an instance of AVError.
+            });
+        }
+    }
+    // 追加pv
+    function addCount(Counter) {
+        var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'icafebolger.com';
+        var Counter = AV.Object.extend("Counter");
+        var query = new Counter;
+        query.save({
+            words: url
+        }).then(function (object) {
+        })
+    }
+    $(function () {
+        var Counter = AV.Object.extend("Counter");
+        addCount(Counter);
+        showTime(Counter);
+    });
+</script>
         
     
     <script>
