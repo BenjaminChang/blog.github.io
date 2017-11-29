@@ -59,6 +59,26 @@
 
     
   <url>
+    <loc>http://westbreeze.cn/2017/04/01/%E5%A4%9A%E5%9F%9F%E5%90%8D%E6%8C%87%E5%90%91%E5%90%8C%E4%B8%80%E4%B8%AAnginx/</loc>
+    <lastmod>2017-11-01T06:29:41.679Z</lastmod>
+    <data>
+        <display>
+        <title>多域名指向统一个nginx配置</title>
+        <pubTime>2017-04-01T10:45:36.000Z</pubTime>
+        
+        <tag>nginx</tag>
+         
+         
+           
+             
+              <breadCrumb title="nginx" url="http://westbreeze.cn/categories/nginx/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://westbreeze.cn/2016/03/21/shiro%E6%95%B4%E5%90%88cas/</loc>
     <lastmod>2017-11-01T05:58:52.170Z</lastmod>
     <data>
