@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2016/9 | westbreeze个人博客</title>
+    <title>标签：: shiro-cas | westbreeze个人博客</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta property="og:type" content="website">
 <meta property="og:title" content="westbreeze个人博客">
-<meta property="og:url" content="http://westbreeze.cn/archives/2016/09/index.html">
+<meta property="og:url" content="http://westbreeze.cn/tags/shiro-cas/index.html">
 <meta property="og:site_name" content="westbreeze个人博客">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -124,7 +124,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>归档: 2016/9
+    <i class="icon fa fa-tag"></i>标签：: <em>shiro-cas</em>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -147,10 +147,10 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
 		
-        <a href="/2016/09/27/无标题Markdown(1)/" class="thumbnail">
+        <a href="/2016/03/21/shiro整合cas/" class="thumbnail">
     
     
-        <span style="background-image:url(http://i1.bvimg.com/620596/d844a1db73b6587f.png)" alt="spring-session redis集群" class="thumbnail-image"></span>
+        <span style="background-image:url(http://i2.bvimg.com/620596/9b5ed854333cfed8.png)" alt="shiro整合CAS" class="thumbnail-image"></span>
     
     
         
@@ -166,22 +166,23 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/集群与负载/">集群与负载</a>
+            <a class="article-category-link" href="/categories/单点登录/">单点登录</a>
             </div>
-            <div class="date"><time datetime="2016-09-26T17:10:58.000Z" itemprop="datePublished">2016-09-27</time></div>
+            <div class="date"><time datetime="2016-03-21T03:39:32.000Z" itemprop="datePublished">2016-03-21</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2016/09/27/无标题Markdown(1)/">spring-session redis集群</a>
+        <a href="/2016/03/21/shiro整合cas/">shiro整合CAS</a>
         </h1>
     
 
         <p class="article-excerpt">
-            近来在使用spring-data-session-redis做web项目session共享的时候碰到一个很奇怪的问题。
-redis集群在配置的是三主三从
-在使用内网ip没有问题
-但是用外网ip连接redis的时候缺报如下错误1Caused by: java.lang.IllegalArgumentException: Node 10.240.47.23:7000 is unknown to clu
+            shiro整合CAS
+
+先说下思路，shiro整合cas，改造shiro原有的登录过程，从cas中获取用户名(不需要密码)，因为密码验证已经在cas中处理了，从cas中获取用户名，构造token，然后继续走shiro该走的流程。最重要的就是重写FormAuthenticationFilter  。第一步：加入jar包
+并且在maven中加入shiro-cas核心包即
+12345&lt;depend
         </p>
     </div>
 </article>
