@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>写在前面 | westbreeze个人博客</title>
+    <title>spring-session redis集群 | westbreeze个人博客</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -12,15 +12,17 @@
     <meta name="description" content="近来在使用spring-data-session-redis做web项目session共享的时候碰到一个很奇怪的问题。 redis集群在配置的是三主三从 在使用内网ip没有问题 但是用外网ip连接redis的时候缺报如下错误1Caused by: java.lang.IllegalArgumentException: Node 10.240.47.23:7000 is unknown to clu">
 <meta name="keywords" content="集群与负载">
 <meta property="og:type" content="article">
-<meta property="og:title" content="写在前面">
+<meta property="og:title" content="spring-session redis集群">
 <meta property="og:url" content="http://westbreeze.cn/2017/08/27/无标题Markdown(1)/index.html">
 <meta property="og:site_name" content="westbreeze个人博客">
 <meta property="og:description" content="近来在使用spring-data-session-redis做web项目session共享的时候碰到一个很奇怪的问题。 redis集群在配置的是三主三从 在使用内网ip没有问题 但是用外网ip连接redis的时候缺报如下错误1Caused by: java.lang.IllegalArgumentException: Node 10.240.47.23:7000 is unknown to clu">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-11-21T13:31:09.886Z">
+<meta property="og:image" content="http://i1.bvimg.com/620596/d844a1db73b6587f.png">
+<meta property="og:updated_time" content="2017-11-29T03:30:03.162Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="写在前面">
+<meta name="twitter:title" content="spring-session redis集群">
 <meta name="twitter:description" content="近来在使用spring-data-session-redis做web项目session共享的时候碰到一个很奇怪的问题。 redis集群在配置的是三主三从 在使用内网ip没有问题 但是用外网ip连接redis的时候缺报如下错误1Caused by: java.lang.IllegalArgumentException: Node 10.240.47.23:7000 is unknown to clu">
+<meta name="twitter:image" content="http://i1.bvimg.com/620596/d844a1db73b6587f.png">
     
 
     
@@ -143,7 +145,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-        写在前面
+        spring-session redis集群
         </h1>
     
 
@@ -175,11 +177,17 @@
 <p>redis集群在配置的是三主三从</p>
 <p>在使用内网ip没有问题</p>
 <p>但是用外网ip连接redis的时候缺报如下错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Caused by: java.lang.IllegalArgumentException: Node 10.240.47.23:7000 is unknown to cluster</div></pre></td></tr></table></figure></p>
+<p><img src="http://i1.bvimg.com/620596/d844a1db73b6587f.png" alt=""></p>
 <p>想了很久也想不通 通过从读取配置文件起一步步f8跟踪找到如下代码</p>
-<p>JedisClusterConnection类中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public List&lt;String&gt; getConfig(final String pattern) &#123;</div><div class="line">        List mapResult = this.clusterCommandExecutor.executeCommandOnAllNodes(new JedisClusterConnection.JedisClusterCommandCallback() &#123;</div><div class="line">            public List&lt;String&gt; doInCluster(Jedis client) &#123;</div><div class="line">                return client.configGet(pattern);</div><div class="line">            &#125;</div><div class="line">        &#125;).getResults();</div><div class="line">        ArrayList result = new ArrayList();</div><div class="line">        Iterator var4 = mapResult.iterator();</div><div class="line"></div><div class="line">        while(var4.hasNext()) &#123;</div><div class="line">            NodeResult entry = (NodeResult)var4.next();</div><div class="line">            String prefix = entry.getNode().asString();</div><div class="line">            int i = 0;</div><div class="line">            Iterator var8 = ((List)entry.getValue()).iterator();</div><div class="line"></div><div class="line">            while(var8.hasNext()) &#123;</div><div class="line">                String value = (String)var8.next();</div><div class="line">                result.add((i++ % 2 == 0?prefix + &quot;.&quot;:&quot;&quot;) + value);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">```   </div><div class="line"></div><div class="line">这段代码会去执行命令连接所有的节点</div><div class="line"></div><div class="line">但是redis在配置主从的时候通过内网ip关联的Cluster 在连接主节点的时候会去找从节点 而本机却连不了内网的ip 因此报这个错误</div><div class="line"></div><div class="line">google clusterCommandExecutor.executeCommandOnAllNodes 找到解决办法</div><div class="line"></div><div class="line">在spring-redis.xml配置文件中添加如下内容：</div></pre></td></tr></table></figure></p>
-<p><util:constant static-field="org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">其含义是让spring session不在管集群节点信息状况，只管存取就行了</div><div class="line"></div><div class="line">在spring-redis.xml中添加util节点需要添加如下命名空间：</div></pre></td></tr></table></figure></util:constant></p>
-<p>xmlns:util=”<a href="http://www.springframework.org/schema/util" target="_blank" rel="external">http://www.springframework.org/schema/util</a>“<br><a href="http://www.springframework.org/schema/util" target="_blank" rel="external">http://www.springframework.org/schema/util</a><br><a href="http://www.springframework.org/schema/util/spring-util-2.0.xsd" target="_blank" rel="external">http://www.springframework.org/schema/util/spring-util-2.0.xsd</a><br>```</p>
-<p>至此困扰良久的问题得以解决</p>
+<p>JedisClusterConnection类中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public List&lt;String&gt; getConfig(final String pattern) &#123;</div><div class="line">        List mapResult = this.clusterCommandExecutor.executeCommandOnAllNodes(new JedisClusterConnection.JedisClusterCommandCallback() &#123;</div><div class="line">            public List&lt;String&gt; doInCluster(Jedis client) &#123;</div><div class="line">                return client.configGet(pattern);</div><div class="line">            &#125;</div><div class="line">        &#125;).getResults();</div><div class="line">        ArrayList result = new ArrayList();</div><div class="line">        Iterator var4 = mapResult.iterator();</div><div class="line"></div><div class="line">        while(var4.hasNext()) &#123;</div><div class="line">            NodeResult entry = (NodeResult)var4.next();</div><div class="line">            String prefix = entry.getNode().asString();</div><div class="line">            int i = 0;</div><div class="line">            Iterator var8 = ((List)entry.getValue()).iterator();</div><div class="line"></div><div class="line">            while(var8.hasNext()) &#123;</div><div class="line">                String value = (String)var8.next();</div><div class="line">                result.add((i++ % 2 == 0?prefix + &quot;.&quot;:&quot;&quot;) + value);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码会去执行命令连接所有的节点</p>
+<p>但是redis在配置主从的时候通过内网ip关联的Cluster 在连接主节点的时候会去找从节点 而本机却连不了内网的ip 因此报这个错误</p>
+<p>google clusterCommandExecutor.executeCommandOnAllNodes 找到解决办法</p>
+<p>在spring-redis.xml配置文件中添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;util:constant static-field=&quot;org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>其含义是让spring session不在管集群节点信息状况，只管存取就行了</p>
+<p>在spring-redis.xml中添加util节点需要添加如下命名空间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">xmlns:util=&quot;http://www.springframework.org/schema/util&quot;</div><div class="line">http://www.springframework.org/schema/util</div><div class="line">http://www.springframework.org/schema/util/spring-util-2.0.xsd</div></pre></td></tr></table></figure>
 
         </div>
         <footer class="article-footer">
@@ -187,7 +195,7 @@
 
 
 
-    <a data-url="http://westbreeze.cn/2017/08/27/无标题Markdown(1)/" data-id="cjaje6g360005xwhq0s76ub14" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://westbreeze.cn/2017/08/27/无标题Markdown(1)/" data-id="cjakhu7r70005p0hqmk3jrcx9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -375,7 +383,7 @@
                             <a href="/2017/08/27/无标题Markdown(1)/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://i1.bvimg.com/620596/d844a1db73b6587f.png)" alt="spring-session redis集群" class="thumbnail-image"></span>
     
     
 </a>
@@ -384,7 +392,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/集群与负载/">集群与负载</a></p>
-                            <p class="item-title"><a href="/2017/08/27/无标题Markdown(1)/" class="title">写在前面</a></p>
+                            <p class="item-title"><a href="/2017/08/27/无标题Markdown(1)/" class="title">spring-session redis集群</a></p>
                             <p class="item-date"><time datetime="2017-08-26T17:10:58.000Z" itemprop="datePublished">2017-08-27</time></p>
                         </div>
                     </li>
