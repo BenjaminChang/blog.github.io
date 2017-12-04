@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>使用lvs搭建高可用集群 | westbreeze个人博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="webService" />
+    
+    <meta name="description" content="lvs+keepalived+nginx+tomcat实现双机热备负载均衡 lvs简介LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是 http://www.linuxvirtualserver.org 现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS">
+<meta name="keywords" content="webService">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用lvs搭建高可用集群">
+<meta property="og:url" content="http://westbreeze.cn/2017/07/15/lvs集群负载/index.html">
+<meta property="og:site_name" content="westbreeze个人博客">
+<meta property="og:description" content="lvs+keepalived+nginx+tomcat实现双机热备负载均衡 lvs简介LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是 http://www.linuxvirtualserver.org 现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i1.bvimg.com/620596/b0c1424bd9a29fea.png">
+<meta property="og:updated_time" content="2017-12-04T13:21:04.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用lvs搭建高可用集群">
+<meta name="twitter:description" content="lvs+keepalived+nginx+tomcat实现双机热备负载均衡 lvs简介LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是 http://www.linuxvirtualserver.org 现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS">
+<meta name="twitter:image" content="http://i1.bvimg.com/620596/b0c1424bd9a29fea.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">兰亭无绪，独饮清风</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/接口/">接口</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-lvs集群负载" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+	
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        使用lvs搭建高可用集群
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/07/15/lvs集群负载/" class="article-date">
+            <time datetime="2017-07-15T15:10:10.000Z" itemprop="datePublished">2017-07-15</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/webService/">webService</a>
+    </div>
+
+            </div>
+        
+		
+		  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>lvs+keepalived+nginx+tomcat实现双机热备负载均衡</p>
+<p>lvs简介<br>LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是 <a href="http://www.linuxvirtualserver.org" target="_blank" rel="external">http://www.linuxvirtualserver.org</a> 现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，它具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS架构从逻辑上可分为调度层、Server集群层和共享存储。</p>
+<p>lvs的原理以及模式介绍<br>推荐文章：<a href="https://www.cnblogs.com/liwei0526vip/p/6370103.htm" target="_blank" rel="external">https://www.cnblogs.com/liwei0526vip/p/6370103.htm</a></p>
+<p>keepalived介绍      </p>
+<p>keepalived是集群管理中保证集群高可用的一个服务软件，其功能类似于heartbeat，用来防止单点故障。</p>
+<p>keepalived工作原理</p>
+<p>keepalived是以VRRP协议为实现基础的，VRRP全称Virtual Router Redundancy Protocol，即虚拟路由冗余协议。</p>
+<p>虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将N台提供相同功能的路由器组成一个路由器组，这个组里面有一个master和多个backup，master上面有一个对外提供服务的vip（该路由器所在局域网内其他机器的默认路由为该vip），master会发组播，当backup收不到vrrp包时就认为master宕掉了，这时就需要根据VRRP的优先级来选举一个backup当master。这样的话就可以保证路由器的高可用了。</p>
+<p>keepalived主要有三个模块，分别是core、check和vrrp。core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check负责健康检查，包括常见的各种检查方式。vrrp模块是来实现VRRP协议的。</p>
+<p>下面开始介绍一种集群方案（网络拓扑图如下图所示）<br><img src="http://i1.bvimg.com/620596/b0c1424bd9a29fea.png" alt="Markdown"><br>由于机器有限：使用两台机器完成<br>192.168.1.44 虚拟ip vip<br>192.168.1.38 lvs主<br>192.168.1.40 lvs备<br>192.168.1.38 nginx<br>192.168.1.40 nginx<br>192.168.1.38:8080 tomcat1<br>192.168.1.38:8081 tomcat2<br>192.168.1.40:8080 tomcat3<br>192.168.1.40:8081 tomcat4   </p>
+<p>下面开始动手搭建：</p>
+<p>1）安装IPVSADM<br>知识点：IPVSADM理解为IPVS管理工具；LVS（Linux Virtual Server）的核心为IPVS（IP Virtual Server），从Linux内核版本2.6起，IPVS模块已经编译进了Linux内核。<br>使用yum命令进行安装，系统会选择最适合内核版本的ipvsadm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install ipvsadm</div></pre></td></tr></table></figure></p>
+<p>2.安装keepalived<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">yum -y install openssl-devel  </div><div class="line">wget http://www.keepalived.org/software/keepalived-1.2.7.tar.gz  </div><div class="line">wget http://mirror.centos.org/centos/6/os/x86_64/Packages/popt-static-1.13-7.el6.x86_64.rpm  </div><div class="line">yum -y install popt-static-1.13-7.el6.x86_64.rpm  </div><div class="line">yum -y install kernel-devel make gcc openssl-devel libnl* popt*  </div><div class="line">ln -s /usr/src/kernels/2.6.32-220.13.1.el6.x86_64/ /usr/src/linux  </div><div class="line">tar zxvf keepalived-1.2.7.tar.gz  </div><div class="line">cd keepalived-1.2.7  </div><div class="line">./configure</div></pre></td></tr></table></figure></p>
+<p>注意执行./configure后显示为，五个yes 不对的话找下原因 <img src="http://i1.bvimg.com/620596/09a5b6003e27a128.jpg" alt="Markdown"></p>
+<p>继续执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">make &amp;&amp; make install  </div><div class="line">cp /usr/local/etc/rc.d/init.d/keepalived /etc/rc.d/init.d/  </div><div class="line">cp /usr/local/etc/sysconfig/keepalived /etc/sysconfig/  </div><div class="line">mkdir /etc/keepalived  </div><div class="line">cp /usr/local/etc/keepalived/keepalived.conf /etc/keepalived/  </div><div class="line">cp /usr/local/sbin/keepalived /usr/sbin/</div></pre></td></tr></table></figure></p>
+<p>keepalived安装完成。</p>
+<p>3.配置keepalived<br>The First：打开IP Forward 功能（LVS现有三种负载均衡规则都需要打开此功能，如果不打开此功能，下面的配置配得再好都无济于事。）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysctl.conf</div></pre></td></tr></table></figure></p>
+<p>打开后修改里面“net.ipv4.ip_forward = 0” 改为 “net.ipv4.ip_forward = 1”</p>
+<p>修改好后保存退出，执行如下命令使设置立即生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sysctl -p</div></pre></td></tr></table></figure></p>
+<p>KeepAlivde配置文件修改<br>配置文件在这个位置： /etc/keepalived/keepalived.conf<br>启动KeepAlived时，它默认会去/etc/keepalived下面找它的配置文件，所以上面命令中我们已经将这个配置文件复制过来了。现在进行修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/keepalived/keepalived.conf</div></pre></td></tr></table></figure></p>
+<p>下面是我的配置，各有不同需要相应的调整<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">! Configuration File for keepalived</div><div class="line">global_defs &#123;</div><div class="line">    notification_email &#123;</div><div class="line">        test@sina.com</div><div class="line">    &#125;</div><div class="line">    notification_email_from admin@test.com</div><div class="line">    smtp_server 127.0.0.1</div><div class="line">    smtp_connect_timeout 30</div><div class="line">    router_id LVS_MASTER</div><div class="line">&#125;</div><div class="line"></div><div class="line">vrrp_instance VI_1 &#123;</div><div class="line">    state MASTER</div><div class="line">    interface eth2</div><div class="line">    virtual_router_id 60</div><div class="line">    priority 100</div><div class="line">    advert_int 1</div><div class="line">    authentication &#123;</div><div class="line">        auth_type PASS</div><div class="line">        auth_pass 1111</div><div class="line">    &#125;</div><div class="line">    virtual_ipaddress &#123;</div><div class="line">        192.168.1.44</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>以上就完成了keepAlived的配置，下面进行启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chkconfig keepalived on  </div><div class="line">service keepalived start</div></pre></td></tr></table></figure></p>
+<p>查看进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux | grep keepalived</div></pre></td></tr></table></figure></p>
+<p>结果如图<br>Keepalived正常运行时，共启动3个进程，其中一个进程是父进程，负责监控其子进程；一个是vrrp子进程；另外一个是checkers子进程。<br>如果此时只看到2个进程，请从安装keepalived的步骤重新执行。<br><img src="http://i4.bvimg.com/620596/6ef48aa4665d55f4.jpg" alt="Markdown"></p>
+<p>查看下虚拟IP是否已经加上（重要）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ip a</div></pre></td></tr></table></figure></p>
+<p><img src="http://i4.bvimg.com/620596/bb2e4b5a97ede075.png" alt="Markdown"><br>虚拟ip加上了<br>如果没有加上可能是keepalived配置配错了<br>interface eth2 这里要注意一下根据自己机器的网卡来写</p>
+<p>添加虚拟ip参考<a href="http://blog.csdn.net/huoyuanshen/article/details/68483188" target="_blank" rel="external">http://blog.csdn.net/huoyuanshen/article/details/68483188</a></p>
+<p>还有3个命令在先列示下，并不用执行<br>显示集群中服务器ip信息：ipvsadm -ln<br>查看日志：tail -f /var/log/messages<br>查看请求转发情况：ipvsadm -lcn | grep 虚拟IP    </p>
+<p>4.WEB服务器WEB1_RealServer的配置<br>vim /etc/init.d/realserver.sh<br>输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash  </div><div class="line">SNS_VIP=192.168.10.100  </div><div class="line">. /etc/rc.d/init.d/functions  </div><div class="line">case &quot;$1&quot; in  </div><div class="line">start)  </div><div class="line"> ifconfig lo:0 $SNS_VIP netmask 255.255.255.255 broadcast $SNS_VIP  </div><div class="line"> /sbin/route add -host $SNS_VIP dev lo:0  </div><div class="line"> echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore  </div><div class="line"> echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce  </div><div class="line"> echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore  </div><div class="line"> echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce  </div><div class="line"> sysctl -p &gt;/dev/null 2&gt;&amp;1  </div><div class="line"> echo &quot;RealServer Start OK&quot;  </div><div class="line"> ;;  </div><div class="line">stop)  </div><div class="line"> ifconfig lo:0 down  </div><div class="line"> route del $SNS_VIP &gt;/dev/null 2&gt;&amp;1  </div><div class="line"> echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore  </div><div class="line"> echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce  </div><div class="line"> echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore  </div><div class="line"> echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce  </div><div class="line"> echo &quot;RealServer Stoped&quot;  </div><div class="line"> ;;  </div><div class="line"> *)  </div><div class="line"> echo &quot;Usage: $0 &#123;start|stop&#125;&quot;  </div><div class="line"> exit 1  </div><div class="line">esac  </div><div class="line">exit 0</div></pre></td></tr></table></figure></p>
+<p>5.安装4个tomcat如下<br>192.168.1.38:8080 tomcat1<br>192.168.1.38:8081 tomcat2<br>192.168.1.40:8080 tomcat3<br>192.168.1.40:8081 tomcat4  </p>
+<p>6.启动虚拟ip脚本<br><img src="http://i4.bvimg.com/620596/71adacb7f709127c.png" alt="Markdown"></p>
+<p>7.nginx配置<br>安装这里就不写了，直接上配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">upstream tomcat &#123;</div><div class="line">       #sticky;</div><div class="line">       server    192.168.1.38:8080 weight=1;</div><div class="line">       server    192.168.1.38:8081 weight=1;</div><div class="line">       server    192.168.1.40:8080 weight=1;</div><div class="line">       server    192.168.1.40:8081 weight=1;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">location ^~ / &#123;</div><div class="line">            proxy_pass http://tomcat;</div><div class="line">            proxy_redirect off ;</div><div class="line">            proxy_set_header Host $host:80;</div><div class="line">            proxy_set_header X-Real-IP $remote_addr;</div><div class="line">            proxy_set_header REMOTE-HOST $remote_addr;</div><div class="line">            proxy_set_header X-Forwarded-For $remote_addr;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>8.从节点配置<br>7.从节点配置<br>1）从LVS_MASTER克隆一个LVS_BACKUP服务器，然后修改其中的参数，MASTER与BACKUP配置仅三处不同：global_defs中的router_id、vrrp_instance中的state、priority<br>router_id LVS_BACKUP<br>state BACKUP<br>priority 90 </p>
+<p>配置全部完成之后全部服务启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1.启动虚拟ip脚本    </div><div class="line">/etc/init.d/realserver.sh </div><div class="line">2.启动keepalived</div><div class="line">service keepalived start</div><div class="line">3.启动nginx</div><div class="line">/usr/local/nginx/sbin/nginx</div><div class="line">4.启动tomcat</div></pre></td></tr></table></figure></p>
+<p>分别修改Tomcat的ROOT目录下面的index.jsp<br>写入内容，已40机器的8080tomcat为例<br>HI ,I AM TOMCAT8080, MY IP IS 192.168.1.40 .</p>
+<p>效果：访问<a href="http://192.168.1.44" target="_blank" rel="external">http://192.168.1.44</a> 不停刷新 会分别在两台机器  四台tomcat上不停的切换</p>
+<p>至此lvs+keepalived+nginx+tomcat实现双机热备负载均衡 搭建成功</p>
+<p>参考文章：<br><a href="http://blog.csdn.net/huoyuanshen/article/details/68483188" target="_blank" rel="external">http://blog.csdn.net/huoyuanshen/article/details/68483188</a><br><a href="https://www.cnblogs.com/liwei0526vip/p/6370103.html" target="_blank" rel="external">https://www.cnblogs.com/liwei0526vip/p/6370103.html</a><br><a href="http://blog.csdn.net/tengyuantuohai/article/details/19639671" target="_blank" rel="external">http://blog.csdn.net/tengyuantuohai/article/details/19639671</a><br><a href="http://outofmemory.cn/wiki/keepalived-configuration" target="_blank" rel="external">http://outofmemory.cn/wiki/keepalived-configuration</a> </p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://westbreeze.cn/2017/07/15/lvs集群负载/" data-id="cjas85llw0000nchqqsjxdlwa" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+			
+	<!-- 来必力City版安装代码 -->
+	<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDQ2OS83MDIz">
+		<script type="text/javascript">
+	   (function(d, s) {
+		   var j, e = d.getElementsByTagName(s)[0];
+
+		   if (typeof LivereTower === 'function') { return; }
+
+		   j = d.createElement(s);
+		   j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		   j.async = true;
+
+		   e.parentNode.insertBefore(j, e);
+	   })(document, 'script');
+		</script>
+	<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+	</div>
+	<!-- City版安装代码已完成 -->
+
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/BenjaminChang" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="https://weibo.com/u/3905981519" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/09/23/jwt/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            使用JWT设计安全的对外接口
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/01/多域名指向同一个nginx/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">多域名指向统一个nginx配置</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/23/jwt/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i1.bvimg.com/620596/da5cb53aaae53068.png)" alt="使用JWT设计安全的对外接口" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/接口/">接口</a></p>
+                            <p class="item-title"><a href="/2017/09/23/jwt/" class="title">使用JWT设计安全的对外接口</a></p>
+                            <p class="item-date"><time datetime="2017-09-23T14:41:01.000Z" itemprop="datePublished">2017-09-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/07/15/lvs集群负载/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i1.bvimg.com/620596/b0c1424bd9a29fea.png)" alt="使用lvs搭建高可用集群" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/接口/">接口</a></p>
+                            <p class="item-title"><a href="/2017/07/15/lvs集群负载/" class="title">使用lvs搭建高可用集群</a></p>
+                            <p class="item-date"><time datetime="2017-07-15T15:10:10.000Z" itemprop="datePublished">2017-07-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/04/01/多域名指向同一个nginx/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i4.bvimg.com/620596/4245120e7c387028.jpg)" alt="多域名指向统一个nginx配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nginx/">nginx</a></p>
+                            <p class="item-title"><a href="/2017/04/01/多域名指向同一个nginx/" class="title">多域名指向统一个nginx配置</a></p>
+                            <p class="item-date"><time datetime="2017-04-01T10:45:36.000Z" itemprop="datePublished">2017-04-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/01/python读取json菜单/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i1.bvimg.com/620596/cbecc46639b261c7.png)" alt="python读取json菜单小工具" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2017/03/01/python读取json菜单/" class="title">python读取json菜单小工具</a></p>
+                            <p class="item-date"><time datetime="2017-03-01T14:06:48.000Z" itemprop="datePublished">2017-03-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/02/15/springboot整合webservice/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i2.bvimg.com/620596/c6e0c31a07e54051.jpg)" alt="springboot整合webService" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/接口/">接口</a></p>
+                            <p class="item-title"><a href="/2017/02/15/springboot整合webservice/" class="title">springboot整合webService</a></p>
+                            <p class="item-date"><time datetime="2017-02-15T13:19:11.000Z" itemprop="datePublished">2017-02-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+		<h1>联系方式：</h1>
+		<p>qq:337123866</p>
+		<p>email:zhangccunjun@outlook.com</p>
+	</div>	
+	<div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/单点登录/">单点登录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/常用文档/">常用文档</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/接口/">接口</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/集群与负载/">集群与负载</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+	<div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/">JWT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SMB/">SMB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shiro-cas/">shiro-cas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webService/">webService</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/westbreeze/">westbreeze</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群与负载/">集群与负载</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/SMB/" style="font-size: 10px;">SMB</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/shiro-cas/" style="font-size: 10px;">shiro-cas</a> <a href="/tags/webService/" style="font-size: 20px;">webService</a> <a href="/tags/westbreeze/" style="font-size: 10px;">westbreeze</a> <a href="/tags/集群与负载/" style="font-size: 10px;">集群与负载</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://shiro.apache.org">Shiro</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://nginx.org">Nginx</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2017 westbreeze</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+				<span id="busuanzi_container_site_pv">站长统计<span id="busuanzi_value_site_pv"></span>次
+			</div>
+        </div>
+    </div>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?e90ef86d912b93978dc68427bc8864a8";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</footer>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var APP_ID = 'T9Th4ByFc2kE8hLy1y2YXh2D-gzGzoHsz';
+    var APP_KEY = 'vCk3V3mIGlaYuPpgSdQIAvl5';
+    AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+    });
+    // 显示次数
+    function showTime(Counter) {
+        var query = new AV.Query("Counter");
+        if($(".leancloud_visitors").length > 0){
+            var url = $(".leancloud_visitors").attr('id').trim();
+            // where field
+            query.equalTo("words", url);
+            // count
+            query.count().then(function (number) {
+                // There are number instances of MyClass where words equals url.
+                $(document.getElementById(url)).text(number?  number : '200');
+            }, function (error) {
+                // error is an instance of AVError.
+            });
+        }
+    }
+    // 追加pv
+    function addCount(Counter) {
+        var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'icafebolger.com';
+        var Counter = AV.Object.extend("Counter");
+        var query = new Counter;
+        query.save({
+            words: url
+        }).then(function (object) {
+        })
+    }
+    $(function () {
+        var Counter = AV.Object.extend("Counter");
+        addCount(Counter);
+        showTime(Counter);
+    });
+</script>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

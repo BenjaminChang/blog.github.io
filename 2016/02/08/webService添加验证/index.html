@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>webService 动态代理客户端用户密码传输 | westbreeze个人博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="webService" />
+    
+    <meta name="description" content="1.首先说服务端，服务端是获取用户名密码来验证这是bean.xml配置。里面配置了一个入拦截器1234567891011121314151617181920212223242526272829&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;lt;beans xmlns=&amp;quot;http://www.springf">
+<meta name="keywords" content="webService">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webService 动态代理客户端用户密码传输">
+<meta property="og:url" content="http://westbreeze.cn/2016/02/08/webService添加验证/index.html">
+<meta property="og:site_name" content="westbreeze个人博客">
+<meta property="og:description" content="1.首先说服务端，服务端是获取用户名密码来验证这是bean.xml配置。里面配置了一个入拦截器1234567891011121314151617181920212223242526272829&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;lt;beans xmlns=&amp;quot;http://www.springf">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i2.bvimg.com/620596/c6e0c31a07e54051.jpg">
+<meta property="og:updated_time" content="2017-12-04T13:19:04.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webService 动态代理客户端用户密码传输">
+<meta name="twitter:description" content="1.首先说服务端，服务端是获取用户名密码来验证这是bean.xml配置。里面配置了一个入拦截器1234567891011121314151617181920212223242526272829&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;lt;beans xmlns=&amp;quot;http://www.springf">
+<meta name="twitter:image" content="http://i2.bvimg.com/620596/c6e0c31a07e54051.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">兰亭无绪，独饮清风</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/接口/">接口</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-webService添加验证" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+	
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        webService 动态代理客户端用户密码传输
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/02/08/webService添加验证/" class="article-date">
+            <time datetime="2016-02-08T12:17:19.000Z" itemprop="datePublished">2016-02-08</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/webService/">webService</a>
+    </div>
+
+            </div>
+        
+		
+		  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>1.首先说服务端，服务端是获取用户名密码来验证<br>这是bean.xml配置。里面配置了一个入拦截器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">      xmlns:jaxws=&quot;http://cxf.apache.org/jaxws&quot;</div><div class="line">      xmlns:jaxrs=&quot;http://cxf.apache.org/jaxrs&quot;</div><div class="line">      xsi:schemaLocation=&quot;</div><div class="line">         http://www.springframework.org/schema/beans</div><div class="line">         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd</div><div class="line">         http://cxf.apache.org/jaxws</div><div class="line">         http://cxf.apache.org/schemas/jaxws.xsd</div><div class="line">         http://cxf.apache.org/jaxrs</div><div class="line">         http://cxf.apache.org/schemas/jaxrs.xsd&quot;&gt;</div><div class="line">  </div><div class="line">  </div><div class="line">  &lt;!-- 引cxf的一些核心配置 --&gt;</div><div class="line">   &lt;import resource=&quot;classpath:META-INF/cxf/cxf.xml&quot; /&gt; </div><div class="line">   &lt;import resource=&quot;classpath:META-INF/cxf/cxf-extension-soap.xml&quot; /&gt;</div><div class="line">   &lt;import resource=&quot;classpath:META-INF/cxf/cxf-servlet.xml&quot; /&gt; </div><div class="line">   </div><div class="line">   &lt;jaxws:endpoint </div><div class="line">     id=&quot;permisWS&quot; </div><div class="line">     implementor=&quot;org.jypj.dev.webService.ApiServcieImpl&quot; </div><div class="line">     address=&quot;/permisws&quot;&gt;</div><div class="line">         &lt;jaxws:inInterceptors&gt;</div><div class="line">             &lt;bean class=&quot;net.jfinal.core.interceptor.CheckUserInterceptor&quot;&gt;&lt;/bean&gt;</div><div class="line">         &lt;/jaxws:inInterceptors&gt;</div><div class="line">    &lt;/jaxws:endpoint&gt;</div><div class="line">     </div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>接下来我们来看<br>自定义的这个拦截器CheckUserInterceptor.java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">package net.jfinal.core.interceptor;</div><div class="line"></div><div class="line">import javax.xml.namespace.QName;</div><div class="line"></div><div class="line">import org.apache.cxf.binding.soap.SoapMessage;</div><div class="line">import org.apache.cxf.headers.Header;</div><div class="line">import org.apache.cxf.interceptor.Fault;</div><div class="line">import org.apache.cxf.phase.AbstractPhaseInterceptor;</div><div class="line">import org.apache.cxf.phase.Phase;</div><div class="line">import org.w3c.dom.Element;</div><div class="line">/**</div><div class="line"> * 查检用户的拦截器</div><div class="line"> * @author zhangcunjun</div><div class="line"> * time:time:2016.2.07 20:15</div><div class="line"> */</div><div class="line">public class CheckUserInterceptor extends AbstractPhaseInterceptor&lt;SoapMessage&gt; &#123;</div><div class="line"></div><div class="line">	</div><div class="line">	public CheckUserInterceptor() &#123;</div><div class="line">		super(Phase.PRE_PROTOCOL);</div><div class="line">		System.out.println(&quot;CheckUserInterceptor()&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line"> 	</div><div class="line">	@Override</div><div class="line">	public void handleMessage(SoapMessage message) throws Fault &#123;</div><div class="line">		Header header = message.getHeader(new QName(&quot;jypj&quot;));</div><div class="line">		if(header!=null) &#123;</div><div class="line">			Element atguiguEle = (Element) header.getObject();</div><div class="line">			String name = atguiguEle.getElementsByTagName(&quot;name&quot;).item(0).getTextContent();</div><div class="line">			String password = atguiguEle.getElementsByTagName(&quot;password&quot;).item(0).getTextContent();</div><div class="line">			if(&quot;zhangcunjun&quot;.equals(name) &amp;&amp; &quot;123456&quot;.equals(password)) &#123;</div><div class="line">				System.out.println(&quot;Server 通过拦截器....&quot;);</div><div class="line">				return;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		//不能通过</div><div class="line">		System.out.println(&quot;Server 没有通过拦截器....&quot;);</div><div class="line">		throw new Fault(new RuntimeException(&quot;请求需要一个正确的用户名和密码dgdfgdfg!&quot;));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以看到在这个拦截器中可以获取到header中获取soap协议中的信息，从中获取用户名和密码来校验，这里面的用户名和密码肯定是自己本地建立配置文件，从配置文件读取。</p>
+<p>2.下面我们来看客户端<br>客户端需要的包<br>cxf-2.5.9.jar<br>neethi-3.0.2.jar<br>wsdl4j-1.6.2.jar<br>xalan-2.7.1.jar<br>xmlschema-core-2.0.3.jar</p>
+<p>动态代理模式，这是一个工具包，我们可以从下面的代码中看到需要新建一个addUserInterceptors.java，这个其中有个PropertiesUtil 工具包，用来获取配置文件中的用户名和密码，这里就不贴出来了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * author:zhangcunjun</div><div class="line"> * time:2016.3.8 17:25</div><div class="line"> */</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line">import org.apache.cxf.endpoint.Client;</div><div class="line">import org.apache.cxf.interceptor.Interceptor;</div><div class="line">import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;</div><div class="line">import org.apache.cxf.message.Message;</div><div class="line">import org.jypj.dev.wsclient.AddUserInterceptor;</div><div class="line"></div><div class="line">public class WebServiceUtil &#123;</div><div class="line">	</div><div class="line">	public static String getValue(String methodname,Object[] param)&#123;</div><div class="line">		PropertiesUtil pu = new PropertiesUtil(&quot;wsconfig.properties&quot;) ;</div><div class="line">		JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();</div><div class="line">		Client client = dcf.createClient(pu.getValue(&quot;wsurl&quot;));</div><div class="line">		</div><div class="line">		List&lt;Interceptor&lt;? extends Message&gt;&gt; outInterceptors = client.getOutInterceptors();</div><div class="line">		outInterceptors.add(new AddUserInterceptor(pu.getValue(&quot;username&quot;), pu.getValue(&quot;password&quot;)));</div><div class="line">		Object[] res;</div><div class="line">		try&#123;</div><div class="line">			</div><div class="line">			res = client.invoke(&quot;getSysMenu&quot;, param) ;</div><div class="line">			System.out.println(res[0].toString());</div><div class="line">			return res[0].toString() ;</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">			return null ;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来看这个拦截器，当客户端发送请求的时候执行这个拦截器，添加用户名和密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*</div><div class="line"> * author:zhangcunjun</div><div class="line"> * time:2016.3.8 20:15</div><div class="line"> */</div><div class="line"></div><div class="line"></div><div class="line">import java.util.List;</div><div class="line">import javax.xml.namespace.QName;</div><div class="line">import org.apache.cxf.binding.soap.SoapMessage;</div><div class="line">import org.apache.cxf.headers.Header;</div><div class="line">import org.apache.cxf.interceptor.Fault;</div><div class="line">import org.apache.cxf.phase.AbstractPhaseInterceptor;</div><div class="line">import org.apache.cxf.phase.Phase;</div><div class="line">import org.apache.xml.utils.DOMHelper;</div><div class="line">import org.w3c.dom.Document;</div><div class="line">import org.w3c.dom.Element;</div><div class="line"></div><div class="line">/*</div><div class="line"> *webService添加验证用户名拦截器，客户端调用webService接口的时候执行</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class AddUserInterceptor extends AbstractPhaseInterceptor&lt;SoapMessage&gt; &#123;</div><div class="line"></div><div class="line">	private String name;</div><div class="line">	private String password;</div><div class="line">	</div><div class="line">	</div><div class="line">	</div><div class="line">	public AddUserInterceptor(String name, String password) &#123;</div><div class="line">		super(Phase.PRE_PROTOCOL);//准备协议化时拦截</div><div class="line">		this.name = name;</div><div class="line">		this.password = password;</div><div class="line">		System.out.println(&quot;AddUserInterceptor()....&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@SuppressWarnings(&quot;deprecation&quot;)</div><div class="line">	@Override</div><div class="line">	public void handleMessage(SoapMessage msg) throws Fault &#123;</div><div class="line">		List&lt;Header&gt; headers = msg.getHeaders();</div><div class="line">		</div><div class="line">		Document document = DOMHelper.createDocument();</div><div class="line">		Element rootEle = document.createElement(&quot;jypj&quot;);</div><div class="line">		Element nameELe = document.createElement(&quot;name&quot;);</div><div class="line">		nameELe.setTextContent(name);</div><div class="line">		rootEle.appendChild(nameELe);</div><div class="line">		Element passwordELe = document.createElement(&quot;password&quot;);</div><div class="line">		passwordELe.setTextContent(password);</div><div class="line">		rootEle.appendChild(passwordELe);</div><div class="line">		</div><div class="line">		headers.add(new Header(new QName(&quot;jypj&quot;), rootEle));</div><div class="line">		System.out.println(&quot;client handleMessage()....&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后整个测试类测试一下吗，这样就可以获取到webService服务传递过来的值json值了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Object[] param = &#123;&quot;fengym2824&quot;,&quot;3&quot;&#125; ;</div><div class="line">        WebServiceUtil.getValue(&quot;getSysMenu&quot;, param) ;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i2.bvimg.com/620596/c6e0c31a07e54051.jpg" alt="Markdown"></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://westbreeze.cn/2016/02/08/webService添加验证/" data-id="cjas85lms000hnchq2s0w3nb3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+			
+	<!-- 来必力City版安装代码 -->
+	<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDQ2OS83MDIz">
+		<script type="text/javascript">
+	   (function(d, s) {
+		   var j, e = d.getElementsByTagName(s)[0];
+
+		   if (typeof LivereTower === 'function') { return; }
+
+		   j = d.createElement(s);
+		   j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		   j.async = true;
+
+		   e.parentNode.insertBefore(j, e);
+	   })(document, 'script');
+		</script>
+	<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+	</div>
+	<!-- City版安装代码已完成 -->
+
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/BenjaminChang" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="https://weibo.com/u/3905981519" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/02/08/webService/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            WebService配置（no spring版）
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2015/09/27/有道云markdown/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">有道云markdown</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/23/jwt/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i1.bvimg.com/620596/da5cb53aaae53068.png)" alt="使用JWT设计安全的对外接口" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/接口/">接口</a></p>
+                            <p class="item-title"><a href="/2017/09/23/jwt/" class="title">使用JWT设计安全的对外接口</a></p>
+                            <p class="item-date"><time datetime="2017-09-23T14:41:01.000Z" itemprop="datePublished">2017-09-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/07/15/lvs集群负载/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i1.bvimg.com/620596/b0c1424bd9a29fea.png)" alt="使用lvs搭建高可用集群" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/接口/">接口</a></p>
+                            <p class="item-title"><a href="/2017/07/15/lvs集群负载/" class="title">使用lvs搭建高可用集群</a></p>
+                            <p class="item-date"><time datetime="2017-07-15T15:10:10.000Z" itemprop="datePublished">2017-07-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/04/01/多域名指向同一个nginx/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i4.bvimg.com/620596/4245120e7c387028.jpg)" alt="多域名指向统一个nginx配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nginx/">nginx</a></p>
+                            <p class="item-title"><a href="/2017/04/01/多域名指向同一个nginx/" class="title">多域名指向统一个nginx配置</a></p>
+                            <p class="item-date"><time datetime="2017-04-01T10:45:36.000Z" itemprop="datePublished">2017-04-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/01/python读取json菜单/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i1.bvimg.com/620596/cbecc46639b261c7.png)" alt="python读取json菜单小工具" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2017/03/01/python读取json菜单/" class="title">python读取json菜单小工具</a></p>
+                            <p class="item-date"><time datetime="2017-03-01T14:06:48.000Z" itemprop="datePublished">2017-03-01</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/02/15/springboot整合webservice/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://i2.bvimg.com/620596/c6e0c31a07e54051.jpg)" alt="springboot整合webService" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/接口/">接口</a></p>
+                            <p class="item-title"><a href="/2017/02/15/springboot整合webservice/" class="title">springboot整合webService</a></p>
+                            <p class="item-date"><time datetime="2017-02-15T13:19:11.000Z" itemprop="datePublished">2017-02-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+		<h1>联系方式：</h1>
+		<p>qq:337123866</p>
+		<p>email:zhangccunjun@outlook.com</p>
+	</div>	
+	<div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/单点登录/">单点登录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/常用文档/">常用文档</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/接口/">接口</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/集群与负载/">集群与负载</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+	<div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/">JWT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SMB/">SMB</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shiro-cas/">shiro-cas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webService/">webService</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/westbreeze/">westbreeze</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群与负载/">集群与负载</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/SMB/" style="font-size: 10px;">SMB</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/shiro-cas/" style="font-size: 10px;">shiro-cas</a> <a href="/tags/webService/" style="font-size: 20px;">webService</a> <a href="/tags/westbreeze/" style="font-size: 10px;">westbreeze</a> <a href="/tags/集群与负载/" style="font-size: 10px;">集群与负载</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://shiro.apache.org">Shiro</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://nginx.org">Nginx</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2017 westbreeze</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+				<span id="busuanzi_container_site_pv">站长统计<span id="busuanzi_value_site_pv"></span>次
+			</div>
+        </div>
+    </div>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?e90ef86d912b93978dc68427bc8864a8";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</footer>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var APP_ID = 'T9Th4ByFc2kE8hLy1y2YXh2D-gzGzoHsz';
+    var APP_KEY = 'vCk3V3mIGlaYuPpgSdQIAvl5';
+    AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+    });
+    // 显示次数
+    function showTime(Counter) {
+        var query = new AV.Query("Counter");
+        if($(".leancloud_visitors").length > 0){
+            var url = $(".leancloud_visitors").attr('id').trim();
+            // where field
+            query.equalTo("words", url);
+            // count
+            query.count().then(function (number) {
+                // There are number instances of MyClass where words equals url.
+                $(document.getElementById(url)).text(number?  number : '200');
+            }, function (error) {
+                // error is an instance of AVError.
+            });
+        }
+    }
+    // 追加pv
+    function addCount(Counter) {
+        var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'icafebolger.com';
+        var Counter = AV.Object.extend("Counter");
+        var query = new Counter;
+        query.save({
+            words: url
+        }).then(function (object) {
+        })
+    }
+    $(function () {
+        var Counter = AV.Object.extend("Counter");
+        addCount(Counter);
+        showTime(Counter);
+    });
+</script>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

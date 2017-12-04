@@ -4,6 +4,106 @@
 
     
   <url>
+    <loc>http://westbreeze.cn/2017/07/15/lvs%E9%9B%86%E7%BE%A4%E8%B4%9F%E8%BD%BD/</loc>
+    <lastmod>2017-12-04T13:21:04.600Z</lastmod>
+    <data>
+        <display>
+        <title>使用lvs搭建高可用集群</title>
+        <pubTime>2017-07-15T15:10:10.000Z</pubTime>
+        
+        <tag>webService</tag>
+         
+         
+           
+             
+              <breadCrumb title="接口" url="http://westbreeze.cn/categories/%E6%8E%A5%E5%8F%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://westbreeze.cn/2016/02/08/webService%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81/</loc>
+    <lastmod>2017-12-04T13:19:04.878Z</lastmod>
+    <data>
+        <display>
+        <title>webService 动态代理客户端用户密码传输</title>
+        <pubTime>2016-02-08T12:17:19.000Z</pubTime>
+        
+        <tag>webService</tag>
+         
+         
+           
+             
+              <breadCrumb title="接口" url="http://westbreeze.cn/categories/%E6%8E%A5%E5%8F%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://westbreeze.cn/2016/02/08/webService/</loc>
+    <lastmod>2017-12-04T13:16:46.803Z</lastmod>
+    <data>
+        <display>
+        <title>WebService配置（no spring版）</title>
+        <pubTime>2016-02-08T13:20:16.000Z</pubTime>
+        
+        <tag>webService</tag>
+         
+         
+           
+             
+              <breadCrumb title="接口" url="http://westbreeze.cn/categories/%E6%8E%A5%E5%8F%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://westbreeze.cn/2015/08/13/%E6%97%A0%E6%A0%87%E9%A2%98Markdown/</loc>
+    <lastmod>2017-12-04T13:15:40.464Z</lastmod>
+    <data>
+        <display>
+        <title>centos下安装nginx</title>
+        <pubTime>2015-08-13T12:09:01.000Z</pubTime>
+        
+        <tag>nginx</tag>
+         
+         
+           
+             
+              <breadCrumb title="nginx" url="http://westbreeze.cn/categories/nginx/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://westbreeze.cn/2017/02/15/springboot%E6%95%B4%E5%90%88webservice/</loc>
+    <lastmod>2017-12-04T13:11:14.399Z</lastmod>
+    <data>
+        <display>
+        <title>springboot整合webService</title>
+        <pubTime>2017-02-15T13:19:11.000Z</pubTime>
+        
+        <tag>webService</tag>
+         
+         
+           
+             
+              <breadCrumb title="接口" url="http://westbreeze.cn/categories/%E6%8E%A5%E5%8F%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://westbreeze.cn/2015/03/26/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/</loc>
     <lastmod>2017-12-02T03:25:10.796Z</lastmod>
     <data>
