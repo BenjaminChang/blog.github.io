@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://westbreeze.cn/2017/07/15/lvs%E9%9B%86%E7%BE%A4%E8%B4%9F%E8%BD%BD/</loc>
-    <lastmod>2017-12-04T13:21:04.600Z</lastmod>
+    <lastmod>2017-12-05T12:03:09.368Z</lastmod>
     <data>
         <display>
         <title>使用lvs搭建高可用集群</title>
@@ -16,7 +16,27 @@
          
            
              
-              <breadCrumb title="接口" url="http://westbreeze.cn/categories/%E6%8E%A5%E5%8F%A3/"/>
+              <breadCrumb title="集群与负载" url="http://westbreeze.cn/categories/%E9%9B%86%E7%BE%A4%E4%B8%8E%E8%B4%9F%E8%BD%BD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://westbreeze.cn/2016/03/26/tomcat%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</loc>
+    <lastmod>2017-12-05T12:03:09.368Z</lastmod>
+    <data>
+        <display>
+        <title>Tomcat开启远程调试</title>
+        <pubTime>2016-03-26T15:02:17.000Z</pubTime>
+        
+        <tag>tomcat</tag>
+         
+         
+           
+             
+              <breadCrumb title="tomcat" url="http://westbreeze.cn/categories/tomcat/"/>
           
         </display>
     </data>

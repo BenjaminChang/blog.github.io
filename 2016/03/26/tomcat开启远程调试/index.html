@@ -3,17 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2015/8 | westbreeze个人博客</title>
+    <title>Tomcat开启远程调试 | westbreeze个人博客</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="westbreeze个人博客">
-<meta property="og:url" content="http://westbreeze.cn/archives/2015/08/index.html">
+        <meta name="keywords" content="tomcat" />
+    
+    <meta name="description" content="tomcat开启远程调试 有些时候调试线上的的问题 本地不能复现 这时候开启tomcat远程调试比较合适 步骤比较简单：第一步：修改catalina.sh文件 在第一行添加如下内容：1JPDA_OPTS=&amp;apos;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000’ 第二步：开放8000端口123nc -lp 80">
+<meta name="keywords" content="tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat开启远程调试">
+<meta property="og:url" content="http://westbreeze.cn/2016/03/26/tomcat开启远程调试/index.html">
 <meta property="og:site_name" content="westbreeze个人博客">
+<meta property="og:description" content="tomcat开启远程调试 有些时候调试线上的的问题 本地不能复现 这时候开启tomcat远程调试比较合适 步骤比较简单：第一步：修改catalina.sh文件 在第一行添加如下内容：1JPDA_OPTS=&amp;apos;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000’ 第二步：开放8000端口123nc -lp 80">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i2.bvimg.com/620596/46d2817f33704ed8.png">
+<meta property="og:updated_time" content="2017-12-05T12:03:09.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="westbreeze个人博客">
+<meta name="twitter:title" content="Tomcat开启远程调试">
+<meta name="twitter:description" content="tomcat开启远程调试 有些时候调试线上的的问题 本地不能复现 这时候开启tomcat远程调试比较合适 步骤比较简单：第一步：修改catalina.sh文件 在第一行添加如下内容：1JPDA_OPTS=&amp;apos;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000’ 第二步：开放8000端口123nc -lp 80">
+<meta name="twitter:image" content="http://i2.bvimg.com/620596/46d2817f33704ed8.png">
     
 
     
@@ -122,119 +131,148 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>归档: 2015/8
+    <a class="page-title-link" href="/categories/tomcat/">tomcat</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-tomcat开启远程调试" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+	
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2015" class="archive-year"><i class="icon fa fa-calendar-o"></i>2015</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-		
-        <a href="/2015/08/22/mysql文档/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://i1.bvimg.com/620596/0456a672e003a875.jpg)" alt="MySql命令大全" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/常用文档/">常用文档</a>
-            </div>
-            <div class="date"><time datetime="2015-08-22T11:03:01.000Z" itemprop="datePublished">2015-08-22</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2015/08/22/mysql文档/">MySql命令大全</a>
+        Tomcat开启远程调试
         </h1>
     
 
-        <p class="article-excerpt">
-            1、连接Mysql格式： mysql -h主机地址 -u用户名 －p用户密码
-1、连接到本机上的MYSQL。首先打开DOS窗口，然后进入目录mysql\bin，再键入命令mysql -u root -p，回车后提示你输密码.注意用户名前可以有空格也可以没有空格，但是密码前必须没有空格，否则让你重新输入密码。
-如果刚安装好MYSQL，超级用户root是没有密码的，故直接回车即可进入到MYSQL中了，
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/03/26/tomcat开启远程调试/" class="article-date">
+            <time datetime="2016-03-26T15:02:17.000Z" itemprop="datePublished">2016-03-26</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-		
-        <a href="/2015/08/13/无标题Markdown/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://i2.bvimg.com/620596/d0ff646bb58279dc.jpg)" alt="centos下安装nginx" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/tomcat/">tomcat</a>
+    </div>
 
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nginx/">nginx</a>
             </div>
-            <div class="date"><time datetime="2015-08-13T12:09:01.000Z" itemprop="datePublished">2015-08-13</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2015/08/13/无标题Markdown/">centos下安装nginx</a>
-        </h1>
-    
+		
+		  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>tomcat开启远程调试</p>
+<p>有些时候调试线上的的问题 本地不能复现 这时候开启tomcat远程调试比较合适</p>
+<p>步骤比较简单：<br>第一步：<br>修改catalina.sh文件 在第一行添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JPDA_OPTS=&apos;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000’</div></pre></td></tr></table></figure></p>
+<p>第二步：<br>开放8000端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nc -lp 8000 &amp;（打开8000端口） </div><div class="line"></div><div class="line">netstat -an | grep 8788 （查看是否打开8000端口 ）</div></pre></td></tr></table></figure></p>
+<p>第三步：<br>已调试模式启动tomcat：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./catalina.sh jpda start</div></pre></td></tr></table></figure></p>
+<p>第四步：<br>idea添加远程调试服务：<br><img src="http://i2.bvimg.com/620596/46d2817f33704ed8.png" alt="Markdown"></p>
+<p>eclipse很久没用了 网上去找个图<br>在Run下找到Debug Configurations<br>中文改成对应的信息。<br><img src="http://i2.bvimg.com/620596/c820644fe174db25.png" alt="Markdown"></p>
+<p>oktomcat远程调试就这么简单</p>
 
-        <p class="article-excerpt">
-            centos下安装nginx
-Nginx 是 C语言 开发，建议在 Linux 上运行，当然，也可以安装 Windows   版本，本篇则使用 CentOS 7 作为安装环境。一. gcc 安装安装 nginx 需要先将官网下载的源码进行编译，编译依赖 gcc 环境，如果没有 gcc 环境，则需要安装：yum install gcc-c++
-二. PCRE pcre-devel 安装PCRE(Pe
-        </p>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://westbreeze.cn/2016/03/26/tomcat开启远程调试/" data-id="cjatqe8hu0006pwhqqkicbix4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+			
+	<!-- 来必力City版安装代码 -->
+	<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDQ2OS83MDIz">
+		<script type="text/javascript">
+	   (function(d, s) {
+		   var j, e = d.getElementsByTagName(s)[0];
+
+		   if (typeof LivereTower === 'function') { return; }
+
+		   j = d.createElement(s);
+		   j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		   j.async = true;
+
+		   e.parentNode.insertBefore(j, e);
+	   })(document, 'script');
+		</script>
+	<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+	</div>
+	<!-- City版安装代码已完成 -->
+
     </div>
 </article>
+
+    <section id="comments">
     
-        </div>
-    
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -263,6 +301,29 @@ Nginx 是 C语言 开发，建议在 Linux 上运行，当然，也可以安装 
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/09/27/无标题Markdown(1)/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            spring-session redis集群
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/03/21/shiro整合cas/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">shiro整合CAS</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         

@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2015/8 | westbreeze个人博客</title>
+    <title>分类：: tomcat | westbreeze个人博客</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta property="og:type" content="website">
 <meta property="og:title" content="westbreeze个人博客">
-<meta property="og:url" content="http://westbreeze.cn/archives/2015/08/index.html">
+<meta property="og:url" content="http://westbreeze.cn/categories/tomcat/index.html">
 <meta property="og:site_name" content="westbreeze个人博客">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>归档: 2015/8
+    <i class="icon fa fa-folder-open"></i>分类：: <em class="page-title-link">tomcat</em>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -134,7 +134,7 @@
         
         <section class="archives-wrap">
             <div class="archive-year-wrap">
-                <a href="/archives/2015" class="archive-year"><i class="icon fa fa-calendar-o"></i>2015</a>
+                <a href="/archives/2016" class="archive-year"><i class="icon fa fa-calendar-o"></i>2016</a>
             </div>
             <div class="archives">
     
@@ -145,56 +145,10 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
 		
-        <a href="/2015/08/22/mysql文档/" class="thumbnail">
+        <a href="/2016/03/26/tomcat开启远程调试/" class="thumbnail">
     
     
-        <span style="background-image:url(http://i1.bvimg.com/620596/0456a672e003a875.jpg)" alt="MySql命令大全" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/常用文档/">常用文档</a>
-            </div>
-            <div class="date"><time datetime="2015-08-22T11:03:01.000Z" itemprop="datePublished">2015-08-22</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2015/08/22/mysql文档/">MySql命令大全</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            1、连接Mysql格式： mysql -h主机地址 -u用户名 －p用户密码
-1、连接到本机上的MYSQL。首先打开DOS窗口，然后进入目录mysql\bin，再键入命令mysql -u root -p，回车后提示你输密码.注意用户名前可以有空格也可以没有空格，但是密码前必须没有空格，否则让你重新输入密码。
-如果刚安装好MYSQL，超级用户root是没有密码的，故直接回车即可进入到MYSQL中了，
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-		
-        <a href="/2015/08/13/无标题Markdown/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://i2.bvimg.com/620596/d0ff646bb58279dc.jpg)" alt="centos下安装nginx" class="thumbnail-image"></span>
+        <span style="background-image:url(http://i2.bvimg.com/620596/46d2817f33704ed8.png)" alt="Tomcat开启远程调试" class="thumbnail-image"></span>
     
     
         
@@ -210,21 +164,22 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/nginx/">nginx</a>
+            <a class="article-category-link" href="/categories/tomcat/">tomcat</a>
             </div>
-            <div class="date"><time datetime="2015-08-13T12:09:01.000Z" itemprop="datePublished">2015-08-13</time></div>
+            <div class="date"><time datetime="2016-03-26T15:02:17.000Z" itemprop="datePublished">2016-03-26</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2015/08/13/无标题Markdown/">centos下安装nginx</a>
+        <a href="/2016/03/26/tomcat开启远程调试/">Tomcat开启远程调试</a>
         </h1>
     
 
         <p class="article-excerpt">
-            centos下安装nginx
-Nginx 是 C语言 开发，建议在 Linux 上运行，当然，也可以安装 Windows   版本，本篇则使用 CentOS 7 作为安装环境。一. gcc 安装安装 nginx 需要先将官网下载的源码进行编译，编译依赖 gcc 环境，如果没有 gcc 环境，则需要安装：yum install gcc-c++
-二. PCRE pcre-devel 安装PCRE(Pe
+            tomcat开启远程调试
+有些时候调试线上的的问题 本地不能复现 这时候开启tomcat远程调试比较合适
+步骤比较简单：第一步：修改catalina.sh文件 在第一行添加如下内容：1JPDA_OPTS=&apos;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000’
+第二步：开放8000端口123nc -lp 80
         </p>
     </div>
 </article>
@@ -234,6 +189,7 @@ Nginx 是 C语言 开发，建议在 Linux 上运行，当然，也可以安装 
 
 
     </div></section>
+
 
 
 
