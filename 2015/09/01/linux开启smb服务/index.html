@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="westbreeze个人博客">
 <meta property="og:description" content="linux开启smb服务 组成Samba运行的有两个服务，一个是SMB，另一个是NMB； SMB是Samba 的核心启动服务，主要负责建立 Linux Samba服务器与Samba客户机之间的对话，验证用户身份并提供对文件和打印系统的访问，只有SMB服务启动，才能实现文件的共享，监听139 TCP端口； 而NMB服务是负责解析用的，类似与DNS实现的功能，NMB可以把Linux系统共享的工作组名称">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://i2.bvimg.com/620596/14d84ea45255c5ec.png">
-<meta property="og:updated_time" content="2017-11-29T08:45:03.386Z">
+<meta property="og:image" content="https://gitee.com/uploads/images/2017/1226/182128_550386aa_397286.png">
+<meta property="og:updated_time" content="2017-12-26T11:03:35.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux开启SMB服务">
 <meta name="twitter:description" content="linux开启smb服务 组成Samba运行的有两个服务，一个是SMB，另一个是NMB； SMB是Samba 的核心启动服务，主要负责建立 Linux Samba服务器与Samba客户机之间的对话，验证用户身份并提供对文件和打印系统的访问，只有SMB服务启动，才能实现文件的共享，监听139 TCP端口； 而NMB服务是负责解析用的，类似与DNS实现的功能，NMB可以把Linux系统共享的工作组名称">
-<meta name="twitter:image" content="http://i2.bvimg.com/620596/14d84ea45255c5ec.png">
+<meta name="twitter:image" content="https://gitee.com/uploads/images/2017/1226/182128_550386aa_397286.png">
     
 
     
@@ -180,15 +180,15 @@
 <p>安装过程这里就不贴图了。</p>
 <p>查看安装情况：</p>
 <p>rmp -qa|grep samba</p>
-<p><img src="http://i2.bvimg.com/620596/14d84ea45255c5ec.png" alt="Markdown"></p>
+<p><img src="https://gitee.com/uploads/images/2017/1226/182128_550386aa_397286.png" alt="Markdown"></p>
 <p>Samba服务器安装完毕，会生成配置文件目录/etc/samba和其它一些samba可执行命令工具，/etc/samba/smb.conf是samba的核心配置文件，/etc/init.d/smb是samba的启动/关闭文件。</p>
 <p>下面我们来配置Samba服务，有一些注意事项我会强调，请大家注意：</p>
 <p>先定位到/etc/samba目录下，把smb.conf备份一下：</p>
 <p>cp smb.conf smb.conf.bak<br>现在我要把/share目录共享给我的win7机器，打开samba配置文件，</p>
 <p>vi /etc/samba/smb.conf<br>用shift+g定位到最后一行,可以看到：</p>
-<p><img src="http://i2.bvimg.com/620596/8960b6247dc3c720.png" alt="Markdown"></p>
+<p><img src="https://gitee.com/uploads/images/2017/1226/182625_125872be_397286.png" alt="Markdown"></p>
 <p>修改如下：</p>
-<p><img src="http://i2.bvimg.com/620596/86399fbb35d415b8.png" alt="Markdown"></p>
+<p><img src="https://gitee.com/uploads/images/2017/1226/182635_5fe71509_397286.png" alt="Markdown"></p>
 <p>好了，保存退出:wq!。</p>
 <p>启动smb服务 service smb start 停止 service smb stop 重新启动service smb restart</p>
 <p>添加smb用户<br>分析及解决办法：samba用户没有创建或激活，可通过以下方法解决：</p>
@@ -202,7 +202,7 @@
 
 
 
-    <a data-url="http://westbreeze.cn/2015/09/01/linux开启smb服务/" data-id="cjblxxbe00007wwhqq4bhm417" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://westbreeze.cn/2015/09/01/linux开启smb服务/" data-id="cjbnjxznz0002ochqyr94l4u4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -321,20 +321,20 @@
         
 <nav id="article-nav">
     
-        <a href="/2015/09/01/oracle常用命令/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2015/09/27/有道云markdown/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            oracle基础服务与命令
+            有道云markdown
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
     </a>
     
     
-        <a href="/2015/08/22/mysql文档/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2015/09/01/oracle常用命令/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">MySql命令大全</p>
+        <p class="article-nav-title">oracle基础服务与命令</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -356,7 +356,7 @@
                             <a href="/2017/09/23/jwt/" class="thumbnail">
     
     
-        <span style="background-image:url(http://i1.bvimg.com/620596/da5cb53aaae53068.png)" alt="使用JWT设计安全的对外接口" class="thumbnail-image"></span>
+        <span style="background-image:url(https://gitee.com/uploads/images/2017/1226/181644_2b3dce47_397286.png)" alt="使用JWT设计安全的对外接口" class="thumbnail-image"></span>
     
     
 </a>
@@ -416,7 +416,7 @@
                             <a href="/2017/03/01/python读取json菜单/" class="thumbnail">
     
     
-        <span style="background-image:url(http://i1.bvimg.com/620596/cbecc46639b261c7.png)" alt="python读取json菜单小工具" class="thumbnail-image"></span>
+        <span style="background-image:url(https://gitee.com/uploads/images/2017/1226/184223_44e73f41_397286.png)" alt="python读取json菜单小工具" class="thumbnail-image"></span>
     
     
 </a>

@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="westbreeze个人博客">
 <meta property="og:description" content="使用JWT（JSON Web Token）设计安全的对外接口 一、JWT简介 JWT(JSON Web Token)JWT是一种安全标准。基本思路就是用户提供用户名和密码给认证服务器，服务器验证用户提交信息信息的合法性;如果验证成功，会产生并返回一个Token（令牌），用户可以使用这个token访问服务器上受保护的资源。 一个token包含三部分：header.claims.signatureHe">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://i1.bvimg.com/620596/da5cb53aaae53068.png">
-<meta property="og:updated_time" content="2017-12-02T02:16:02.164Z">
+<meta property="og:image" content="https://gitee.com/uploads/images/2017/1226/181644_2b3dce47_397286.png">
+<meta property="og:updated_time" content="2017-12-26T11:02:40.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用JWT设计安全的对外接口">
 <meta name="twitter:description" content="使用JWT（JSON Web Token）设计安全的对外接口 一、JWT简介 JWT(JSON Web Token)JWT是一种安全标准。基本思路就是用户提供用户名和密码给认证服务器，服务器验证用户提交信息信息的合法性;如果验证成功，会产生并返回一个Token（令牌），用户可以使用这个token访问服务器上受保护的资源。 一个token包含三部分：header.claims.signatureHe">
-<meta name="twitter:image" content="http://i1.bvimg.com/620596/da5cb53aaae53068.png">
+<meta name="twitter:image" content="https://gitee.com/uploads/images/2017/1226/181644_2b3dce47_397286.png">
     
 
     
@@ -178,7 +178,7 @@
 <p>Claims声明</p>
 <p>声明部分是整个token的核心，表示要发送的用户详细信息。有些情况下，我们很可能要在一个服务器上实现认证，然后访问另一台服务器上的资源；  或者，通过单独的接口来生成token，token被保存在应用程序客户端（比如浏览器）使用。<br>一个简单的声明（claim）的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</div><div class="line">  &quot;name&quot;: &quot;John Doe&quot;,</div><div class="line">  &quot;admin&quot;: true</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Signature签名<br>签名的目的是为了保证上边两部分信息不被篡改。如果尝试使用Bas64对解码后的token进行修改，签名信息就会失效。一般使用一个私钥（private key）通过特定算法对Header和Claims进行混淆产生签名信息，所以只有原始的token才能于签名信息匹配。<br>这里有一个重要的实现细节。只有获取了私钥的应用程序（比如服务器端应用）才能完全认证token包含声明信息的合法性。所以，永远不要把私钥信息放在客户端（比如浏览器）。</p>
-<p>二、JWT流程<br><img src="http://i1.bvimg.com/620596/da5cb53aaae53068.png" alt="Markdown"><br>第一步：传递自定义信息（图上是传的用户名和密码）到JWT服务端<br>第二步：JWT服务端校验自定义信息正确后返回TOKEN<br>第三步：客户端使用TOKEN去请求数据接口<br>第四步：服务端校验TOKEN正确后返回数据       </p>
+<p>二、JWT流程<br><img src="https://gitee.com/uploads/images/2017/1226/181644_2b3dce47_397286.png" alt="Markdown"><br>第一步：传递自定义信息（图上是传的用户名和密码）到JWT服务端<br>第二步：JWT服务端校验自定义信息正确后返回TOKEN<br>第三步：客户端使用TOKEN去请求数据接口<br>第四步：服务端校验TOKEN正确后返回数据       </p>
 <p>三、API接口设计<br>在使用JWT的基础上，完善JWT使用http请求模式下的安全问题。<br>解决问题1：如果token在http请求传输过程中被窃取怎么办。<br>JWT解决方案：token是动态的，可以设置失效时间，一般一个小时失效。</p>
 <p>解决问题2：如果请求token的自定义信息在传输过程中被窃取，就可以无限的拿到token，数据接口也就完全暴露。<br>解决方案：获取token的时候传输自定义信息命名为ticket。<br><br>ticket的组成部分分三个部分：<br><br>时间戳-固定字符串SHA秘钥加密-随机整数SHA秘钥加密<br><br>对整个字符串再通过自定义秘钥加密得到ticket。<br>并且做以下三样保证：</p>
 <ol>
@@ -191,7 +191,7 @@
 
 
 
-    <a data-url="http://westbreeze.cn/2017/09/23/jwt/" data-id="cjblxxbdk0002wwhqarfh2hy8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://westbreeze.cn/2017/09/23/jwt/" data-id="cjbnjxzob0006ochq5qjm3b8b" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -335,7 +335,7 @@
                             <a href="/2017/09/23/jwt/" class="thumbnail">
     
     
-        <span style="background-image:url(http://i1.bvimg.com/620596/da5cb53aaae53068.png)" alt="使用JWT设计安全的对外接口" class="thumbnail-image"></span>
+        <span style="background-image:url(https://gitee.com/uploads/images/2017/1226/181644_2b3dce47_397286.png)" alt="使用JWT设计安全的对外接口" class="thumbnail-image"></span>
     
     
 </a>
@@ -395,7 +395,7 @@
                             <a href="/2017/03/01/python读取json菜单/" class="thumbnail">
     
     
-        <span style="background-image:url(http://i1.bvimg.com/620596/cbecc46639b261c7.png)" alt="python读取json菜单小工具" class="thumbnail-image"></span>
+        <span style="background-image:url(https://gitee.com/uploads/images/2017/1226/184223_44e73f41_397286.png)" alt="python读取json菜单小工具" class="thumbnail-image"></span>
     
     
 </a>
